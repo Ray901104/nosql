@@ -27,3 +27,17 @@ del user:email:1
 
 # 현재 DB 내 모든 key 삭제
 flushdb
+
+# redis 활용 : 좋아요 기능 구현
+set likes:posting:1 0
+incr likes:posting:1 # 특정 key 값의 value 를 1만큼 증가시킨다.
+decr likes:posting:1 # 특정 key 값의 value 를 1만큼 감소시킨다.
+get likes:posting:1
+
+# redis 활용 : 재고 관리
+set stocks:product:1 100
+decr stocks:product:1
+get stocks:product:1
+
+# redis 활용 : 캐싱(임시 저장) 기능 구현
+set posting:1 "{\"title\":\"hello java\", \"contents\":\"hello java is...\", \"author_email\":\"hong@naver.com\"}" ex 100
