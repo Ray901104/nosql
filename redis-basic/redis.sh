@@ -80,3 +80,33 @@ rpush mypages www.chatgpt.com
 rpush mypages www.daum.com
 # 최근 방문한 페이지 3개 조회
 lrange mypages 0 2
+
+### Set 자료구조 : 순서가 없고 중복을 허용하지 않는 자료구조
+# set 에 값 추가
+sadd memberlist member1
+sadd memberlist member2
+sadd memberlist member3
+
+# set 조회
+smembers memberlist
+
+# set 데이터 개수 조회
+scard memberlist
+
+# set 데이터 삭제
+srem memberlist member2
+
+# 특정 요소가 set 안에 들어있는지 확인
+# 0 -> false, 1 -> true
+sismember memberlist member1
+
+# redis 활용 : 좋아요 기능 구현
+# 기존에 string 자료구조로 구현한 좋아요 기능은 누가 좋아요를 눌렀는지 구분을 할 수 없다.
+# 특정 사용자가 좋아요를 누를 때 마다 무한히 좋아요 개수가 늘어나는 문제가 발생한다.
+sadd likes:posting:1 member1
+sadd likes:posting:1 member2
+sadd likes:posting:1 member1
+# 좋아요 개수
+scard likes:posting:1
+# 좋아요 눌렀는지 확인
+sismember likes:posting:1 member1
