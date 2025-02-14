@@ -160,3 +160,10 @@ hincrby member:info:1 age -2
 
 # redis 활용 : 빈번하게 변경되는 객체 값 캐싱
 # json 형태를 문자열로 캐싱할 경우, 해당 문자열을 수정할 때 매번 파싱하여 통째로 변경해야 한다 <- 해시는 이러한 문제를 해결
+
+### pub/sub 기능
+# pub/sub 기능은 멀티 서버 환경에서 채팅, 알림 등의 서비스를 구현할 때 주로 사용된다.
+# 터미널 2, 3 구독
+subscribe test_channel
+# 터미널 1 발행
+publish test_channel "hello, this is a test message"
