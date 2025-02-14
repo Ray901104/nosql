@@ -140,3 +140,23 @@ zadd recent:products 152230 apple
 zadd recent:products 152330 apple
 zrevrange recent:products 0 2
 zrevrange recent:products 0 2 withscores # score 도 함께 출력
+
+### Hash 자료구조 : map 형태의 자료구조, value 값이 key:value, key:value 형태로 저장
+hset member:info:1 name hong email hong@naver.com age 30
+
+# 특정 요소 조회
+hget member:info:1 name
+hget member:info:1 email
+
+# 전체 요소 조회
+hgetall member:info:1
+
+# 특정 요소 값만 수정
+hset member:info:1 name kim
+
+# 특정 요소 값을 증가/감소
+hincrby member:info:1 age 3
+hincrby member:info:1 age -2
+
+# redis 활용 : 빈번하게 변경되는 객체 값 캐싱
+# json 형태를 문자열로 캐싱할 경우, 해당 문자열을 수정할 때 매번 파싱하여 통째로 변경해야 한다 <- 해시는 이러한 문제를 해결
