@@ -161,9 +161,23 @@ hincrby member:info:1 age -2
 # redis 활용 : 빈번하게 변경되는 객체 값 캐싱
 # json 형태를 문자열로 캐싱할 경우, 해당 문자열을 수정할 때 매번 파싱하여 통째로 변경해야 한다 <- 해시는 이러한 문제를 해결
 
-### pub/sub 기능
+### pub/sub 기능 : 데이터를 실시간으로 subscribe, 메시지가 저장되지 않는다.
 # pub/sub 기능은 멀티 서버 환경에서 채팅, 알림 등의 서비스를 구현할 때 주로 사용된다.
 # 터미널 2, 3 구독
 subscribe test_channel
 # 터미널 1 발행
 publish test_channel "hello, this is a test message"
+
+### streams 자료구조 : 데이터를 실시간으로 read, 메시지가 저장된다.
+# streams 보다는 kafka, rabbitmq, nats 등의 메시징 시스템을 사용하는 것이 좋다.
+# * -> 고유 id(난수 값)를 자동으로 생성하라는 키워드
+xadd test_streams * message "hello, this is a stream message"
+
+# xread : streams 의 데이터를 읽어오는 명령어
+# $ -> 현재 마지막 메시지 이후에 오는 새 메시지를 의미한다.
+xread block 20000 streams test_streams $
+
+# 전체 메시지 조회 : - +
+xrange test_streams - +
+
+# 활용 : 이벤트 기반 시스템, 채팅 및 알림 시스템 -> 더 나은 대안이 존재
